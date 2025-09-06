@@ -9,8 +9,8 @@ const Topbar: React.FC = () => {
 
   return (
     <div className="bg-gray-900 text-white shadow-md">
-      {/* Topmost Row: Call and Email */}
-      <div className="flex justify-end items-center px-6 pt-4 text-sm">
+      {/* Topmost Row: Call and Email and Track Order */}
+      <div className="flex justify-end items-center px-6 py-2 text-sm">
         <div className="flex items-center space-x-6">
           <div className="flex items-center">
             <FaTruck className="mr-1" />
@@ -51,7 +51,7 @@ const Topbar: React.FC = () => {
         </div>
 
         {/* Right Section: Cart, Wishlist, User Account */}
-        <div className="flex items-center space-x-8 bg-gray-800 px-8 py-2 rounded-full">
+        <div className="flex items-center space-x-8 bg-gray-800 px-6 py-2 rounded-full">
           <div className="flex flex-col items-center cursor-pointer hover:text-blue-400 transition-colors duration-200">
             <FaShoppingCart size={20} />
             <span className="text-xs mt-1">Cart</span>

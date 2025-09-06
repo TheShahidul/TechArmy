@@ -3,19 +3,10 @@ import { Link } from 'react-router-dom';
 import { navData, type NavItem } from '../data/navData.ts';
 import { FiMenu, FiX, FiChevronDown, FiChevronUp } from 'react-icons/fi';
 
-const Dropdown: React.FC<{ items: NavItem[] }> = ({ items }) => (
-  <div className="absolute left-0 w-48 bg-white rounded-md shadow-lg z-10 hidden group-hover:block">
-    {items.map(item => (
-      <Link key={item.name} to={item.path || '#'} className="block px-4 py-2 text-sm text-gray-700 hover:bg-blue-500 hover:text-white">
-        {item.name}
-      </Link>
-    ))}
-  </div>
-);
-
 const Navbar: React.FC = () => {
   const [isOpen, setIsOpen] = useState(false);
   const [openItems, setOpenItems] = useState<string[]>([]);
+  const [hoveredItem, setHoveredItem] = useState<NavItem | null>(null);
 
   const toggleItem = (itemName: string) => {
     setOpenItems(prevOpenItems =>
@@ -26,7 +17,10 @@ const Navbar: React.FC = () => {
   };
 
   return (
-    <nav className="bg-gray-900 p-4 sticky top-0 z-50">
+    <nav
+      className="bg-gray-900 py-5 sticky top-0 z-50 relative"
+      onMouseLeave={() => setHoveredItem(null)}
+    >
       <div className="container mx-auto flex justify-between items-center">
         {/* Hamburger Menu for Mobile */}
         <div className="md:hidden">
@@ -36,50 +30,92 @@ const Navbar: React.FC = () => {
         </div>
 
         {/* Desktop Menu */}
-        <ul className="hidden md:flex space-x-4">
+        <ul className="hidden md:flex space-x-6">
           {navData.map((item) => (
-            <li key={item.name} className="relative group">
-              <Link to={item.path || '#'} className="text-white bg-gray-900 px-3 py-2 rounded-md text-sm font-medium transition-all duration-300 hover:bg-blue-900 hover:text-white">
-                {item.name}
-              </Link>
-              {item.subItems && <Dropdown items={item.subItems} />}
+            <li key={item.name} className="relative">
+              <div
+                className="group"
+                onMouseEnter={() => setHoveredItem(item)}
+              >
+                <Link to={item.path || '#'} className="text-white px-3 py-3 rounded-md text-sm font-medium hover:bg-blue-700 transition-colors duration-200">
+                  {item.name}
+                  {item.subItems && <FiChevronDown className="inline-block ml-1 text-xs" />}
+                </Link>
+              </div>
             </li>
           ))}
         </ul>
       </div>
 
-      {/* Mobile Menu */}
-      {isOpen && (
-        <div className="md:hidden mt-4">
-          <ul className="flex flex-col space-y-2">
-            {navData.map((item) => (
-              <li key={item.name}>
-                <div className="flex justify-between items-center">
-                  <Link to={item.path || '#'} className="text-white block px-3 py-2 rounded-md text-base font-medium">
-                    {item.name}
-                  </Link>
-                  {item.subItems && (
-                    <button onClick={() => toggleItem(item.name)} className="text-white">
-                      {openItems.includes(item.name) ? <FiChevronUp size={20} /> : <FiChevronDown size={20} />}
-                    </button>
-                  )}
-                </div>
-                {item.subItems && openItems.includes(item.name) && (
-                  <ul className="pl-4">
-                    {item.subItems.map(subItem => (
+      {/* Mega Menu Dropdown */}
+      {hoveredItem && hoveredItem.subItems && (
+        <div className="absolute left-0 right-0 top-full bg-white shadow-lg z-40 py-6">
+          <div className="container mx-auto grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6">
+            {hoveredItem.subItems.map(mainCategory => (
+              <div key={mainCategory.name} className="flex flex-col">
+                <Link to={mainCategory.path || '#'} className="font-bold text-lg text-gray-800 mb-3 hover:text-blue-600">
+                  {mainCategory.name}
+                </Link>
+                {mainCategory.subItems && (
+                  <ul className="space-y-1">
+                    {mainCategory.subItems.map(subItem => (
                       <li key={subItem.name}>
-                        <Link to={subItem.path || '#'} className="text-gray-300 block px-3 py-2 rounded-md text-sm font-medium">
+                        <Link to={subItem.path || '#'} className="block px-2 py-1 text-sm text-gray-600 hover:bg-blue-100 hover:text-blue-800 rounded">
                           {subItem.name}
                         </Link>
+                        {subItem.subItems && (
+                          <ul className="pl-4 space-y-1">
+                            {subItem.subItems.map(subSubItem => (
+                              <li key={subSubItem.name}>
+                                <Link to={subSubItem.path || '#'} className="block px-2 py-1 text-xs text-gray-500 hover:bg-blue-100 hover:text-blue-800 rounded">
+                                  {subSubItem.name}
+                                </Link>
+                              </li>
+                            ))}
+                          </ul>
+                        )}
                       </li>
                     ))}
                   </ul>
                 )}
-              </li>
+              </div>
             ))}
-          </ul>
+          </div>
         </div>
       )}
+
+      {/* Mobile Menu */}
+      <div
+        className={`md:hidden mt-4 overflow-hidden transition-all duration-300 ease-in-out ${isOpen ? 'max-h-screen opacity-100' : 'max-h-0 opacity-0'}`}
+      >
+        <ul className="flex flex-col space-y-2">
+          {navData.map((item) => (
+            <li key={item.name}>
+              <div className="flex justify-between items-center">
+                <Link to={item.path || '#'} className="text-white block px-3 py-2 rounded-md text-base font-medium">
+                  {item.name}
+                </Link>
+                {item.subItems && (
+                  <button onClick={() => toggleItem(item.name)} className="text-white">
+                    {openItems.includes(item.name) ? <FiChevronUp size={20} /> : <FiChevronDown size={20} />}
+                  </button>
+                )}
+              </div>
+              {item.subItems && openItems.includes(item.name) && (
+                <ul className="pl-4 transition-all duration-300 ease-in-out" style={{ maxHeight: openItems.includes(item.name) ? '1000px' : '0' }}>
+                  {item.subItems.map(subItem => (
+                    <li key={subItem.name}>
+                      <Link to={subItem.path || '#'} className="text-gray-300 block px-3 py-2 rounded-md text-sm font-medium hover:bg-gray-700">
+                        {subItem.name}
+                      </Link>
+                    </li>
+                  ))}
+                </ul>
+              )}
+            </li>
+          ))}
+        </ul>
+      </div>
     </nav>
   );
 };
