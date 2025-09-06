@@ -10,10 +10,10 @@ import 'swiper/css/navigation';
 import 'swiper/css/pagination';
 import 'swiper/css/scrollbar';
 
-import banner1 from './herobanner/Banner-1.jpeg';
-import banner2 from './herobanner/Banner-2.jpeg';
-import banner3 from './herobanner/Banner-3.jpeg';
-import banner4 from './herobanner/Banner-4.jpeg';
+import banner1 from '../HeroBanner/Banner-1.jpeg';
+import banner2 from '../HeroBanner/Banner-2.jpeg';
+import banner3 from '../HeroBanner/Banner-3.jpeg';
+import banner4 from '../HeroBanner/Banner-4.jpeg';
 
 const Hero: React.FC = () => {
   return (

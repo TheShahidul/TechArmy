@@ -1,6 +1,6 @@
 
 import React from 'react';
-import { products } from './products';
+import { products } from '../data/products';
 import ProductCard from './ProductCard';
 
 const Popularproducts: React.FC = () => {

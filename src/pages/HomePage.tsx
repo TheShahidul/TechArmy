@@ -1,11 +1,11 @@
-import Hero from './Hero'
-import Productcategory from './Body/Productcategory'
-import Hotdeals from './Body/Hotdeals'
-import Popularproducts from './Body/Popularproducts'
-import Newarrivals from './Body/Newarrivals'
-import Productdesign from './Body/Productdesign'
-import Upcoming from './Body/Upcoming'
-import Partners from './Body/Partners'
+import Hero from '../components/Hero';
+import Productcategory from '../components/Productcategory';
+import Hotdeals from '../components/Hotdeals';
+import Popularproducts from '../components/Popularproducts';
+import Newarrivals from '../components/Newarrivals';
+import Productdesign from '../components/Productdesign';
+import Upcoming from '../components/Upcoming';
+import Partners from '../components/Partners';
 
 const HomePage = () => {
   return (
@@ -19,7 +19,7 @@ const HomePage = () => {
       <Upcoming />
       <Partners />
     </>
-  )
-}
+  );
+};
 
-export default HomePage
+export default HomePage;

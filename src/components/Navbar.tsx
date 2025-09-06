@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import { Link } from 'react-router-dom';
-import { navData, type NavItem } from './navData';
-import { FiMenu, FiX } from 'react-icons/fi';
+import { navData, type NavItem } from '../data/navData.ts';
+import { FiMenu, FiX, FiChevronDown, FiChevronUp } from 'react-icons/fi';
 
 const Dropdown: React.FC<{ items: NavItem[] }> = ({ items }) => (
   <div className="absolute left-0 w-48 bg-white rounded-md shadow-lg z-10 hidden group-hover:block">
@@ -15,6 +15,15 @@ const Dropdown: React.FC<{ items: NavItem[] }> = ({ items }) => (
 
 const Navbar: React.FC = () => {
   const [isOpen, setIsOpen] = useState(false);
+  const [openItems, setOpenItems] = useState<string[]>([]);
+
+  const toggleItem = (itemName: string) => {
+    setOpenItems(prevOpenItems =>
+      prevOpenItems.includes(itemName)
+        ? prevOpenItems.filter(item => item !== itemName)
+        : [...prevOpenItems, itemName]
+    );
+  };
 
   return (
     <nav className="bg-gray-900 p-4 sticky top-0 z-50">
@@ -45,12 +54,23 @@ const Navbar: React.FC = () => {
           <ul className="flex flex-col space-y-2">
             {navData.map((item) => (
               <li key={item.name}>
-                <Link to={item.path || '#'} className="text-white block px-3 py-2 rounded-md text-base font-medium">{item.name}</Link>
-                {item.subItems && (
+                <div className="flex justify-between items-center">
+                  <Link to={item.path || '#'} className="text-white block px-3 py-2 rounded-md text-base font-medium">
+                    {item.name}
+                  </Link>
+                  {item.subItems && (
+                    <button onClick={() => toggleItem(item.name)} className="text-white">
+                      {openItems.includes(item.name) ? <FiChevronUp size={20} /> : <FiChevronDown size={20} />}
+                    </button>
+                  )}
+                </div>
+                {item.subItems && openItems.includes(item.name) && (
                   <ul className="pl-4">
                     {item.subItems.map(subItem => (
                       <li key={subItem.name}>
-                        <Link to={subItem.path || '#'} className="text-gray-300 block px-3 py-2 rounded-md text-sm font-medium">{subItem.name}</Link>
+                        <Link to={subItem.path || '#'} className="text-gray-300 block px-3 py-2 rounded-md text-sm font-medium">
+                          {subItem.name}
+                        </Link>
                       </li>
                     ))}
                   </ul>
