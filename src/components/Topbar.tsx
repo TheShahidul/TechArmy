@@ -1,14 +1,34 @@
 import React from 'react';
-import { FaShoppingCart, FaHeart, FaUser, FaSearch } from 'react-icons/fa';
+import { FaShoppingCart, FaHeart, FaUser, FaSearch, FaPhone, FaTruck } from 'react-icons/fa';
+import { MdEmail } from 'react-icons/md';
 import logo from '../Company-logo/Tech-army.png'; // Assuming this is the correct path to your logo
 
 const Topbar: React.FC = () => {
   return (
-    <div className="bg-gray-900 text-white py-3 shadow-md">
-      <div className="container mx-auto flex items-center justify-between px-6">
+    <div className="bg-gray-900 text-white shadow-md">
+      {/* Topmost Row: Call and Email */}
+      <div className="flex justify-end items-center px-6 pt-4 text-sm">
+        <div className="flex items-center space-x-6">
+          <div className="flex items-center">
+            <FaTruck className="mr-1" />
+            <span>Track Your Order</span>
+          </div>
+          <div className="flex items-center">
+            <FaPhone className="mr-1" />
+            <span>+880 1234 567890</span> {/* Placeholder Phone Number */}
+          </div>
+          <div className="flex items-center">
+            <MdEmail className="mr-1" />
+            <span>info@techarmybd.com</span> {/* Placeholder Email Address */}
+          </div>
+        </div>
+      </div>
+
+      {/* Main Topbar Content */}
+      <div className="container mx-auto flex items-center justify-between px-6 pb-3">
         {/* Left Section: Logo, Shop Text, Slogan */}
         <div className="flex items-center space-x-3">
-          <img src={logo} alt="Tech Army Logo" className="h-32 w-auto rounded-full" />
+          <img src={logo} alt="Tech Army Logo" className="h-28 w-auto rounded-full" />
           <div className="flex flex-col">
             <span className="text-3xl font-bold">TechArmyBD Ltd.</span>
             <span className="text-sm text-gray-400">Your Trusted IT Product Companion</span>
