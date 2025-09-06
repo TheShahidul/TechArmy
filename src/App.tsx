@@ -9,6 +9,7 @@ import Upcoming from './Body/Upcoming';
 import Popularproducts from './Body/Popularproducts';
 import Hotdeals from './Body/Hotdeals';
 import Allproducts from './Body/Allproducts';
+import Productinfo from './Body/Productinfo';
 import CategoryPage from './Body/CategoryPage';
 import { navData } from './navData';
 
@@ -39,6 +40,7 @@ function App() {
             <Route key={subSubItem.name} path={subSubItem.path} element={<CategoryPage />} />
           ))))}
           <Route path="/products" element={<Allproducts />} />
+          <Route path="/product/:id" element={<Productinfo />} />
           {/* Add other routes here as needed */}
         </Routes>
       </main>

@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { Link } from 'react-router-dom';
-import { navData, NavItem } from './navData';
+import { navData, type NavItem } from './navData';
 import { FiMenu, FiX } from 'react-icons/fi';
 
 const Dropdown: React.FC<{ items: NavItem[] }> = ({ items }) => (
