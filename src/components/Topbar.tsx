@@ -1,9 +1,12 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { FaShoppingCart, FaHeart, FaUser, FaSearch, FaPhone, FaTruck } from 'react-icons/fa';
 import { MdEmail } from 'react-icons/md';
 import logo from '../Company-logo/Tech-army.png'; // Assuming this is the correct path to your logo
+import { Link } from 'react-router-dom';
 
 const Topbar: React.FC = () => {
+  const [isAccountDropdownOpen, setIsAccountDropdownOpen] = useState(false);
+
   return (
     <div className="bg-gray-900 text-white shadow-md">
       {/* Topmost Row: Call and Email */}
@@ -41,14 +44,14 @@ const Topbar: React.FC = () => {
             <input
               type="text"
               placeholder="Search for products..."
-              className="w-full py-2 pl-10 pr-4 rounded-full bg-gray-800 text-white placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-blue-500"
+              className="w-4/5 py-2 pl-10 pr-4 rounded-full bg-gray-800 text-white placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-blue-500"
             />
             <FaSearch className="absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-400" />
           </div>
         </div>
 
         {/* Right Section: Cart, Wishlist, User Account */}
-        <div className="flex items-center space-x-6">
+        <div className="flex items-center space-x-8 bg-gray-800 px-8 py-2 rounded-full">
           <div className="flex flex-col items-center cursor-pointer hover:text-blue-400 transition-colors duration-200">
             <FaShoppingCart size={20} />
             <span className="text-xs mt-1">Cart</span>
@@ -57,9 +60,23 @@ const Topbar: React.FC = () => {
             <FaHeart size={20} />
             <span className="text-xs mt-1">Wishlist</span>
           </div>
-          <div className="flex flex-col items-center cursor-pointer hover:text-blue-400 transition-colors duration-200">
+          <div
+            className="relative flex flex-col items-center cursor-pointer hover:text-blue-400 transition-colors duration-200"
+            onMouseEnter={() => setIsAccountDropdownOpen(true)}
+            onMouseLeave={() => setIsAccountDropdownOpen(false)}
+          >
             <FaUser size={20} />
             <span className="text-xs mt-1">Account</span>
+            {isAccountDropdownOpen && (
+              <div className="absolute top-full w-28 bg-gray-700 rounded-md shadow-lg z-20">
+                <Link to="/login" className="block px-4 py-2 text-sm text-white hover:bg-blue-500 rounded-t-md">
+                  Login
+                </Link>
+                <Link to="/register" className="block px-4 py-2 text-sm text-white hover:bg-blue-500 rounded-b-md">
+                  Register
+                </Link>
+              </div>
+            )}
           </div>
         </div>
       </div>
