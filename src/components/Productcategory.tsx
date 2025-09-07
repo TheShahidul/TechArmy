@@ -21,7 +21,7 @@ const Productcategory: React.FC = () => {
       </div>
 
       {/* Categories Grid */}
-      <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-6 gap-4 md:gap-6"> {/* Added xl:grid-cols-7, adjusted gap */}
+      <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-6 gap-x-4 md:gap-x-6 gap-y-2 md:gap-y-4"> {/* Added xl:grid-cols-7, adjusted gap */}
         {categoriesData.map((category, index) => {
           let IconComponent: React.ElementType | undefined;
 
@@ -43,13 +43,13 @@ const Productcategory: React.FC = () => {
             <Link
               key={index}
               to={category.href}
-              className="relative flex flex-col items-center justify-center bg-white rounded-xl shadow-md hover:shadow-xl transform hover:scale-105 transition-all duration-300 border border-gray-200 hover:border-blue-500 aspect-square p-1" // Enhanced card styling and hover
+              className="relative flex flex-col items-center justify-center bg-white rounded-xl shadow-md hover:shadow-xl transform hover:scale-105 transition-all duration-300 border border-gray-200 hover:border-blue-500 aspect-w-8 aspect-h-6 px-1 py-3" // Enhanced card styling and hover
             >
-              <div className="w-16 h-16 flex items-center justify-center bg-blue-100 rounded-full mb-4"> {/* Icon background circle */}
+              <div className="w-16 h-16 flex items-center justify-center bg-blue-100 rounded-full mb-0"> {/* Icon background circle */}
                 {IconComponent && <IconComponent size={32} className="text-blue-600" />} {/* Icon size adjusted */}
                 {!IconComponent && <div className="w-12 h-12 flex items-center justify-center text-gray-500">?</div>}
               </div>
-              <span className="text-lg font-semibold text-gray-800 text-center mt-2">{category.title}</span> {/* Adjusted text styling */}
+              <span className="text-base font-semibold text-gray-800 text-center mt-0">{category.title}</span> {/* Adjusted text styling */}
             </Link>
           );
         })}
