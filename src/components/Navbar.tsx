@@ -75,7 +75,7 @@ const MenuItem: React.FC<MenuItemProps> = ({ item, level = 0 }) => {
 
 const Navbar: React.FC = () => {
   return (
-    <nav className="bg-white shadow-md">
+    <nav className="bg-gray-200 shadow-md sticky top-0 z-50">
       <div className="container mx-auto px-4 py-3 flex justify-center items-center">
         <ul className="flex space-x-2">
           {menuData.map((item, index) => (
