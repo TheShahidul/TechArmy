@@ -163,6 +163,9 @@ const Footer: React.FC = () => {
           </svg>
         </button>
       </div>
+      <div className="mt-8 text-center text-sm text-gray-400">
+        <span>made with <span className="text-red-500">♥</span> by Shahidul</span>
+      </div>
     </footer>
   );
 };
