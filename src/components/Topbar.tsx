@@ -4,7 +4,11 @@ import { MdEmail } from 'react-icons/md';
 import logo from '../Company-logo/Tech-army.png'; // Assuming this is the correct path to your logo
 import { Link } from 'react-router-dom';
 
-const Topbar: React.FC = () => {
+interface TopbarProps {
+  toggleCart: () => void; // Add toggleCart prop
+}
+
+const Topbar: React.FC<TopbarProps> = ({ toggleCart }) => { // Destructure toggleCart
   const [isAccountDropdownOpen, setIsAccountDropdownOpen] = useState(false);
 
   return (
@@ -52,7 +56,10 @@ const Topbar: React.FC = () => {
 
         {/* Right Section: Cart, Wishlist, User Account */}
         <div className="flex items-center space-x-8 bg-gray-800 px-6 py-2 rounded-full">
-          <div className="flex flex-col items-center cursor-pointer hover:text-blue-400 transition-colors duration-200">
+          <div
+            className="flex flex-col items-center cursor-pointer hover:text-blue-400 transition-colors duration-200"
+            onClick={toggleCart} // Add onClick handler here
+          >
             <FaShoppingCart size={20} />
             <span className="text-xs mt-1">Cart</span>
           </div>
@@ -74,7 +81,7 @@ const Topbar: React.FC = () => {
                 </Link>
                 <Link to="/register" className="block px-4 py-2 text-sm text-white hover:bg-blue-500 rounded-b-md">
                   Register
-                </Link>
+  </Link>
               </div>
             )}
           </div>
