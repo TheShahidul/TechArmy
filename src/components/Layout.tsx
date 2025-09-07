@@ -1,25 +1,27 @@
-import React, { useState } from 'react';
+import React from 'react';
+import { CartSidebarProvider, useCartSidebar } from './CartSidebarContext';
 import Topbar from './Topbar';
 import Navbar from './Navbar';
 import Footer from './Footer';
 import CartSidebar from './CartSidebar';
 
-const Layout = ({ children }: { children: React.ReactNode }) => {
-  const [isCartOpen, setIsCartOpen] = useState(false);
-
-  const toggleCart = () => {
-    setIsCartOpen(!isCartOpen);
-  };
-
+const LayoutInner = ({ children }: { children: React.ReactNode }) => {
+  const { isOpen, openCart, closeCart } = useCartSidebar();
   return (
     <>
-      <Topbar toggleCart={toggleCart} />
+      <Topbar toggleCart={openCart} />
       <Navbar />
       <main>{children}</main>
       <Footer />
-      <CartSidebar isOpen={isCartOpen} onClose={toggleCart} />
+      <CartSidebar isOpen={isOpen} onClose={closeCart} />
     </>
   );
 };
+
+const Layout = ({ children }: { children: React.ReactNode }) => (
+  <CartSidebarProvider>
+    <LayoutInner>{children}</LayoutInner>
+  </CartSidebarProvider>
+);
 
 export default Layout;

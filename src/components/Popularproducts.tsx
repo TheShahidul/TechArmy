@@ -1,6 +1,7 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
 import { popularProductsData } from '../data/popularProductsData';
+import { products } from '../data/products';
 import { FaStar, FaShoppingCart } from 'react-icons/fa';
 import * as FaIcons from 'react-icons/fa';
 import * as MdIcons from 'react-icons/md';
@@ -9,8 +10,13 @@ import * as BsIcons from 'react-icons/bs';
 import * as FiIcons from 'react-icons/fi';
 import * as LuIcons from 'react-icons/lu';
 import SectionTitle from './SectionTitle';
+import { useDispatch } from 'react-redux';
+import { addToCart } from '../store/slices/cartSlice';
+import { useCartSidebar } from './CartSidebarContext';
 
 const Popularproducts: React.FC = () => {
+  const dispatch = useDispatch();
+  const { openCart } = useCartSidebar();
   return (
     <div className="container mx-auto my-12 px-4">
       <SectionTitle title="Popular Products" description="Discover our best-selling items" />
@@ -75,7 +81,26 @@ const Popularproducts: React.FC = () => {
                     onClick={(e) => {
                       e.preventDefault();
                       e.stopPropagation();
-                      alert(`Added ${product.name} to cart!`);
+                      // Find the full product by name (or id if available)
+                      const fullProduct = products.find(p => p.name === product.name);
+                      if (fullProduct) {
+                        dispatch(addToCart(fullProduct));
+                        openCart();
+                      } else {
+                        // fallback: dispatch with available fields and placeholders
+                        dispatch(addToCart({
+                          ...product,
+                          id: Number(product.id),
+                          image: '',
+                          status: 'Popular',
+                          category: '',
+                          subcategory: '',
+                          price: product.price.replace(/[^\d.]/g, ''),
+                          oldPrice: product.oldPrice ? Number(product.oldPrice.replace(/[^\d.]/g, '')) : undefined,
+                          icon: product.icon as any,
+                        }));
+                        openCart();
+                      }
                     }}
                     className="w-full bg-blue-600 text-white py-2 rounded-md flex items-center justify-center space-x-2 font-semibold transition-colors duration-300 hover:bg-[#111826]"
                   >

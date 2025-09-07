@@ -14,9 +14,14 @@ import 'swiper/css/navigation';
 import 'swiper/css/pagination';
 import { Navigation, Pagination, Autoplay } from 'swiper/modules';
 import SectionTitle from './SectionTitle';
+import { useDispatch } from 'react-redux';
+import { addToCart } from '../store/slices/cartSlice';
+import { useCartSidebar } from './CartSidebarContext';
 
 const Upcoming: React.FC = () => {
   const upcomingProducts = products.filter(product => product.status === 'Upcoming');
+  const dispatch = useDispatch();
+  const { openCart } = useCartSidebar();
 
   return (
     <div className="container mx-auto my-12 px-4">
@@ -116,7 +121,8 @@ const Upcoming: React.FC = () => {
                         onClick={(e) => {
                           e.preventDefault();
                           e.stopPropagation();
-                          alert(`Added ${product.name} to cart!`);
+                          dispatch(addToCart(product));
+                          openCart();
                         }}
                         className="w-full bg-blue-600 text-white py-2 rounded-md flex items-center justify-center space-x-2 font-semibold transition-colors duration-300 hover:bg-[#111826]"
                       >

@@ -22,7 +22,12 @@ const CartSidebar: React.FC<CartSidebarProps> = ({ isOpen, onClose }) => {
   };
 
   const getCartTotal = () => {
-    return cartItems.reduce((total: number, item: { price?: number; quantity: number }) => total + (item.price ?? 0) * item.quantity, 0);
+    return cartItems.reduce((total: number, item: any) => {
+      // Ensure price is a number and quantity exists
+      const price = typeof item.price === 'string' ? parseFloat(item.price) : item.price ?? 0;
+      const quantity = item.quantity ?? 1;
+      return total + price * quantity;
+    }, 0);
   };
 
   return (
@@ -39,14 +44,14 @@ const CartSidebar: React.FC<CartSidebarProps> = ({ isOpen, onClose }) => {
         {cartItems.length === 0 ? (
           <p>Your cart is empty.</p>
         ) : (
-          cartItems.map((item: { id: number; image: string; name: string; quantity: number; price?: number }) => (
+          cartItems.map((item: any) => (
             <div key={item.id} className="flex items-center justify-between mb-4 pb-4 border-b border-gray-700 last:border-b-0">
               <div className="flex items-center">
                 <img src={item.image} alt={item.name} className="w-16 h-16 object-cover rounded mr-4" />
                 <div>
                   <h3 className="font-semibold text-white">{item.name}</h3>
-                  <p className="text-gray-400 text-sm">Quantity: {item.quantity}</p>
-                  <p className="text-white font-bold">BDT {(item.price ?? 0) * item.quantity}</p>
+                  <p className="text-gray-400 text-sm">Quantity: {item.quantity ?? 1}</p>
+                  <p className="text-white font-bold">BDT {((typeof item.price === 'string' ? parseFloat(item.price) : item.price ?? 0) * (item.quantity ?? 1))}</p>
                 </div>
               </div>
               <button onClick={() => handleRemoveFromCart(item.id)} className="text-red-500 hover:text-red-700">
@@ -59,7 +64,7 @@ const CartSidebar: React.FC<CartSidebarProps> = ({ isOpen, onClose }) => {
       <div className="absolute bottom-0 left-0 w-full p-4 border-t border-gray-700 bg-gray-900">
         <div className="flex justify-between items-center mb-4">
           <span className="text-lg font-semibold text-white">Total:</span>
-          <span className="text-lg font-bold text-white">BDT {getCartTotal().toFixed(2)}</span>
+          <span className="text-lg font-bold text-white">BDT {Number(getCartTotal()).toFixed(2)}</span>
         </div>
         <button
           onClick={handleClearCart}
