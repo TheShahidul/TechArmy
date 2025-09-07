@@ -1,123 +1,84 @@
-import React, { useState } from 'react';
+import React, { useState, useRef, useEffect } from 'react';
 import { Link } from 'react-router-dom';
-import { navData, type NavItem } from '../data/navData.ts';
-import { FiMenu, FiX, FiChevronDown, FiChevronUp } from 'react-icons/fi';
+import { menuData, type MenuItem as IMenuItem } from '../data/menuData';
 
-const Dropdown: React.FC<{ items: NavItem[] }> = ({ items }) => (
-  <div className="absolute left-1/2 -translate-x-1/2 w-screen bg-white shadow-lg z-10">
-    <div className="container mx-auto grid grid-cols-4 gap-4 p-4">
-      {items.map(item => (
-        <div key={item.name} className="flex flex-col">
-          <Link to={item.path || '#'} className="font-bold text-lg text-gray-800 mb-2 hover:text-blue-600">
-            {item.name}
-          </Link>
-          {item.subItems && (
-            <ul className="space-y-1">
-              {item.subItems.map(subItem => (
-                <li key={subItem.name}>
-                  <Link to={subItem.path || '#'} className="block px-2 py-1 text-sm text-gray-600 hover:bg-blue-100 hover:text-blue-800 rounded">
-                    {subItem.name}
-                  </Link>
-                  {subItem.subItems && (
-                    <ul className="pl-4 space-y-1">
-                      {subItem.subItems.map(subSubItem => (
-                        <li key={subSubItem.name}>
-                          <Link to={subSubItem.path || '#'} className="block px-2 py-1 text-xs text-gray-500 hover:bg-blue-100 hover:text-blue-800 rounded">
-                            {subSubItem.name}
-                          </Link>
-                        </li>
-                      ))}
-                    </ul>
-                  )}
-                </li>
-              ))}
-            </ul>
-          )}
-        </div>
-      ))}
-    </div>
-  </div>
-);
+interface MenuItemProps {
+  item: IMenuItem;
+  level?: number; // To track nesting level for styling/positioning
+}
 
-const Navbar: React.FC = () => {
+const MenuItem: React.FC<MenuItemProps> = ({ item, level = 0 }) => {
+  const hasChildren = item.children && item.children.length > 0;
   const [isOpen, setIsOpen] = useState(false);
-  const [openItems, setOpenItems] = useState<string[]>([]);
-  const [hoveredItem, setHoveredItem] = useState<NavItem | null>(null);
+  const [openLeft, setOpenLeft] = useState(false); // New state for opening left
+  const itemRef = useRef<HTMLLIElement>(null); // Ref for the li element
 
-  const toggleItem = (itemName: string) => {
-    setOpenItems(prevOpenItems =>
-      prevOpenItems.includes(itemName)
-        ? prevOpenItems.filter(item => item !== itemName)
-        : [...prevOpenItems, itemName]
-    );
+  const handleMouseEnter = () => {
+    setIsOpen(true);
   };
 
-  return (
-    <nav
-      className="bg-gray-900 p-4 sticky top-0 z-50 relative"
-      onMouseLeave={() => setHoveredItem(null)}
-    >
-      <div className="container mx-auto flex justify-between items-center">
-        {/* Hamburger Menu for Mobile */}
-        <div className="md:hidden">
-          <button onClick={() => setIsOpen(!isOpen)} className="text-white">
-            {isOpen ? <FiX size={24} /> : <FiMenu size={24} />}
-          </button>
-        </div>
+  const handleMouseLeave = () => {
+    setIsOpen(false);
+    setOpenLeft(false); // Reset on mouse leave
+  };
 
-        {/* Desktop Menu */}
-        <ul className="hidden md:flex space-x-4">
-          {navData.map((item) => (
-            <li key={item.name} className="relative">
-              <div
-                className="group"
-                onMouseEnter={() => setHoveredItem(item)}
-              >
-                <Link to={item.path || '#'} className="text-white bg-gray-900 px-3 py-2 rounded-md text-sm font-medium transition-all duration-300 hover:bg-blue-900 hover:text-white">
-                  {item.name}
-                </Link>
-              </div>
-            </li>
+  // Effect to calculate dropdown position on open
+  useEffect(() => {
+    if (isOpen && hasChildren && itemRef.current) {
+      const itemRect = itemRef.current.getBoundingClientRect();
+      const dropdownWidth = 192; // w-48 is 192px
+      const viewportWidth = window.innerWidth;
+
+      // Only apply openLeft logic for nested dropdowns (level > 0)
+      if (level > 0 && itemRect.right + dropdownWidth > viewportWidth) {
+        setOpenLeft(true);
+      } else {
+        setOpenLeft(false);
+      }
+    }
+  }, [isOpen, hasChildren, level]); // Recalculate when isOpen changes or level changes
+
+  // Determine dropdown positioning classes
+  const dropdownPositionClasses = level === 0
+    ? 'top-full left-0' // Top-level dropdowns open directly below the parent item
+    : (openLeft ? 'right-full top-0' : 'left-full top-0'); // Nested dropdowns open to the side, flipping if needed
+
+  const dropdownClasses = `absolute w-48 bg-white shadow-lg rounded-md py-1 z-10 ${
+    isOpen ? 'block' : 'hidden'
+  } group-hover:block ${dropdownPositionClasses}`;
+
+  return (
+    <li
+      className="relative group"
+      onMouseEnter={handleMouseEnter}
+      onMouseLeave={handleMouseLeave}
+      ref={itemRef} // Attach ref to the li
+    >
+      <Link
+        to={item.href}
+        className="block px-4 py-2 text-gray-700 hover:bg-gray-100 hover:text-blue-600 transition-colors duration-200"
+      >
+        {item.label}
+        {/* Removed the SVG arrow icon */}
+      </Link>
+      {hasChildren && (
+        <ul className={dropdownClasses}>
+          {item.children?.map((child, index) => (
+            <MenuItem key={index} item={child} level={level + 1} />
           ))}
         </ul>
-      </div>
-
-      {/* Full-width Dropdown */}
-      {hoveredItem && hoveredItem.subItems && (
-        <div className="absolute left-0 right-0 top-full bg-white shadow-lg z-40">
-          <Dropdown items={hoveredItem.subItems} />
-        </div>
       )}
+    </li>
+  );
+};
 
-      {/* Mobile Menu */}
-      <div
-        className={`md:hidden mt-4 overflow-hidden transition-all duration-300 ease-in-out ${isOpen ? 'max-h-screen opacity-100' : 'max-h-0 opacity-0'}`}
-      >
-        <ul className="flex flex-col space-y-2">
-          {navData.map((item) => (
-            <li key={item.name}>
-              <div className="flex justify-between items-center">
-                <Link to={item.path || '#'} className="text-white block px-3 py-2 rounded-md text-base font-medium">
-                  {item.name}
-                </Link>
-                {item.subItems && (
-                  <button onClick={() => toggleItem(item.name)} className="text-white">
-                    {openItems.includes(item.name) ? <FiChevronUp size={20} /> : <FiChevronDown size={20} />}
-                  </button>
-                )}
-              </div>
-              {item.subItems && openItems.includes(item.name) && (
-                <ul className="pl-4 transition-all duration-300 ease-in-out" style={{ maxHeight: openItems.includes(item.name) ? '1000px' : '0' }}>
-                  {item.subItems.map(subItem => (
-                    <li key={subItem.name}>
-                      <Link to={subItem.path || '#'} className="text-gray-300 block px-3 py-2 rounded-md text-sm font-medium hover:bg-gray-700">
-                        {subItem.name}
-                      </Link>
-                    </li>
-                  ))}
-                </ul>
-              )}
-            </li>
+const Navbar: React.FC = () => {
+  return (
+    <nav className="bg-white shadow-md">
+      <div className="container mx-auto px-4 py-3 flex justify-end items-center">
+        <ul className="flex space-x-4">
+          {menuData.map((item, index) => (
+            <MenuItem key={index} item={item} level={0} />
           ))}
         </ul>
       </div>
