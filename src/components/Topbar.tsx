@@ -68,7 +68,7 @@ const Topbar: React.FC = () => {
             <FaUser size={20} />
             <span className="text-xs mt-1">Account</span>
             {isAccountDropdownOpen && (
-              <div className="absolute top-full w-28 bg-gray-700 rounded-md shadow-lg z-20">
+              <div className="absolute top-full w-28 bg-gray-700 rounded-md shadow-lg z-[99]">
                 <Link to="/login" className="block px-4 py-2 text-sm text-white hover:bg-blue-500 rounded-t-md">
                   Login
                 </Link>
