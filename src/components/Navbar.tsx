@@ -73,8 +73,14 @@ const MenuItem: React.FC<MenuItemProps> = ({ item, level = 0 }) => {
   );
 };
 
+import { useSelector, useDispatch } from 'react-redux';
+import type { RootState } from '../store/store';
+import { logout } from '../store/slices/authSlice';
+
 const Navbar: React.FC = () => {
   const [scrolled, setScrolled] = useState(false);
+  const auth = useSelector((state: RootState) => state.auth);
+  const dispatch = useDispatch();
 
   useEffect(() => {
     const handleScroll = () => {
@@ -95,12 +101,23 @@ const Navbar: React.FC = () => {
     <nav className={`shadow-md sticky top-0 z-50 transition-all duration-300 ${
       scrolled ? 'bg-white bg-opacity-80 backdrop-blur-md' : 'bg-gray-200'
     }`}>
-      <div className="container mx-auto px-4 py-3 flex justify-center items-center">
+      <div className="container mx-auto px-4 py-3 flex justify-between items-center">
         <ul className="flex space-x-2">
           {menuData.map((item, index) => (
             <MenuItem key={index} item={item} level={0} />
           ))}
         </ul>
+        <div className="flex items-center space-x-4">
+          {auth.isAuthenticated && (
+            <>
+              <span className="text-sm">Hello, {auth.user?.username}</span>
+              <button
+                onClick={() => dispatch(logout())}
+                className="bg-red-500 hover:bg-red-600 text-white px-3 py-1 rounded text-sm font-semibold"
+              >Logout</button>
+            </>
+          )}
+        </div>
       </div>
     </nav>
   );

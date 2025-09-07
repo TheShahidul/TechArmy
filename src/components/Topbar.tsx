@@ -1,4 +1,7 @@
 import React, { useState } from 'react';
+import { useSelector, useDispatch } from 'react-redux';
+import type { RootState } from '../store/store';
+import { logout } from '../store/slices/authSlice';
 import { FaShoppingCart, FaHeart, FaUser, FaSearch, FaPhone, FaTruck } from 'react-icons/fa';
 import { MdEmail } from 'react-icons/md';
 import logo from '../Company-logo/Tech-army.png'; // Assuming this is the correct path to your logo
@@ -10,6 +13,8 @@ interface TopbarProps {
 
 const Topbar: React.FC<TopbarProps> = ({ toggleCart }) => { // Destructure toggleCart
   const [isAccountDropdownOpen, setIsAccountDropdownOpen] = useState(false);
+  const auth = useSelector((state: RootState) => state.auth);
+  const dispatch = useDispatch();
 
   return (
     <div className="bg-gray-900 text-white shadow-md">
@@ -75,13 +80,25 @@ const Topbar: React.FC<TopbarProps> = ({ toggleCart }) => { // Destructure toggl
             <FaUser size={20} />
             <span className="text-xs mt-1">Account</span>
             {isAccountDropdownOpen && (
-              <div className="absolute top-full w-28 bg-gray-700 rounded-md shadow-lg z-[99]">
-                <Link to="/login" className="block px-4 py-2 text-sm text-white hover:bg-blue-500 rounded-t-md">
-                  Login
-                </Link>
-                <Link to="/register" className="block px-4 py-2 text-sm text-white hover:bg-blue-500 rounded-b-md">
-                  Register
-  </Link>
+              <div className="absolute top-full w-36 bg-gray-700 rounded-md shadow-lg z-[99]">
+                {auth.isAuthenticated ? (
+                  <>
+                    <div className="px-4 py-2 text-sm text-white border-b border-gray-600">Hello, {auth.user?.username}</div>
+                    <button
+                      onClick={() => dispatch(logout())}
+                      className="block w-full text-left px-4 py-2 text-sm text-white hover:bg-red-500 rounded-b-md"
+                    >Logout</button>
+                  </>
+                ) : (
+                  <>
+                    <Link to="/login" className="block px-4 py-2 text-sm text-white hover:bg-blue-500 rounded-t-md">
+                      Login
+                    </Link>
+                    <Link to="/signup" className="block px-4 py-2 text-sm text-white hover:bg-blue-500 rounded-b-md">
+                      Sign Up
+                    </Link>
+                  </>
+                )}
               </div>
             )}
           </div>
