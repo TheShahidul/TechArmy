@@ -58,7 +58,7 @@ const MenuItem: React.FC<MenuItemProps> = ({ item, level = 0 }) => {
     >
       <Link
         to={item.href}
-        className="block px-4 py-2 text-gray-700 hover:bg-gray-100 hover:text-blue-600 transition-colors duration-200"
+        className="block px-2 py-2 text-gray-700 hover:bg-gray-100 hover:text-blue-600 transition-colors duration-200 whitespace-nowrap"
       >
         {item.label}
       </Link>
@@ -76,8 +76,8 @@ const MenuItem: React.FC<MenuItemProps> = ({ item, level = 0 }) => {
 const Navbar: React.FC = () => {
   return (
     <nav className="bg-white shadow-md">
-      <div className="container mx-auto px-4 py-3 flex justify-end items-center">
-        <ul className="flex space-x-4">
+      <div className="container mx-auto px-4 py-3 flex justify-center items-center">
+        <ul className="flex space-x-2">
           {menuData.map((item, index) => (
             <MenuItem key={index} item={item} level={0} />
           ))}
