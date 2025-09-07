@@ -1,39 +1,33 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
 import { popularProductsData } from '../data/popularProductsData';
-import { FaStar, FaShoppingCart } from 'react-icons/fa'; // For star ratings and shopping cart icon
-import * as FaIcons from 'react-icons/fa'; // Import all Fa icons
-import * as MdIcons from 'react-icons/md'; // Import all Md icons
-import * as Io5Icons from 'react-icons/io5'; // Import all Io5 icons
-import * as BsIcons from 'react-icons/bs'; // Import all Bs icons
-import * as FiIcons from 'react-icons/fi'; // Import all Fi icons
-import * as LuIcons from 'react-icons/lu'; // Import all Lu icons
+import { FaStar, FaShoppingCart } from 'react-icons/fa';
+import * as FaIcons from 'react-icons/fa';
+import * as MdIcons from 'react-icons/md';
+import * as Io5Icons from 'react-icons/io5';
+import * as BsIcons from 'react-icons/bs';
+import * as FiIcons from 'react-icons/fi';
+import * as LuIcons from 'react-icons/lu';
 
 const Popularproducts: React.FC = () => {
   return (
-    <div className="container mx-auto my-8 px-4">
-      {/* Title Section */}
+    <div className="container mx-auto my-12 px-4">
       <div className="text-center mb-12">
-        <h2 className="text-4xl md:text-5xl font-extrabold text-gray-800 mb-4 relative inline-block">
+        <h2 className="text-4xl md:text-5xl font-extrabold text-gray-800 mb-4">
           Popular Products
-          <span className="absolute bottom-0 left-1/2 transform -translate-x-1/2 w-24 h-1 bg-blue-600 rounded-full"></span>
         </h2>
-        <p className="text-lg md:text-xl text-gray-600 mt-4">Discover our best-selling items</p>
+        <p className="text-lg md:text-xl text-gray-600">Discover our best-selling items</p>
       </div>
 
-      {/* Products Grid */}
-      <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5 gap-6">
+      <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5 gap-8">
         {popularProductsData.map((product) => {
           let IconComponent: React.ElementType | undefined;
 
-          // Dynamic icon lookup (similar to Productcategory.tsx)
           if (FaIcons[product.icon as keyof typeof FaIcons]) {
             IconComponent = FaIcons[product.icon as keyof typeof FaIcons];
           } else if (MdIcons[product.icon as keyof typeof MdIcons]) {
             IconComponent = MdIcons[product.icon as keyof typeof MdIcons];
-          }
-          // If not found in MdIcons, try Io5Icons
-          else if (Io5Icons[product.icon as keyof typeof Io5Icons]) {
+          } else if (Io5Icons[product.icon as keyof typeof Io5Icons]) {
             IconComponent = Io5Icons[product.icon as keyof typeof Io5Icons];
           } else if (BsIcons[product.icon as keyof typeof BsIcons]) {
             IconComponent = BsIcons[product.icon as keyof typeof BsIcons];
@@ -47,26 +41,22 @@ const Popularproducts: React.FC = () => {
             <Link
               key={product.id}
               to={product.href}
-              className="block bg-white rounded-lg shadow-md hover:shadow-xl transform hover:-translate-y-1 transition-all duration-300 overflow-hidden border border-gray-200 relative min-h-[20rem]"
+              className="group block bg-white rounded-lg shadow-lg hover:shadow-2xl transform hover:-translate-y-2 transition-all duration-300 overflow-hidden"
             >
-              {/* Product Image Section - now uses icon */}
-              <div className="relative overflow-hidden aspect-w-1 aspect-h-1 flex items-center justify-center bg-gray-100"> {/* Added flex, items-center, justify-center, bg-gray-100 */}
-                {IconComponent && <IconComponent size={64} className="text-blue-600" />} {/* Render icon */}
-                {!IconComponent && <div className="w-16 h-16 flex items-center justify-center text-gray-500">?</div>} {/* Fallback */}
+              <div className="relative overflow-hidden h-48 flex items-center justify-center bg-gray-100">
+                {IconComponent && <IconComponent size={64} className="text-blue-600 group-hover:scale-110 transition-transform duration-300" />} 
+                {!IconComponent && <div className="w-16 h-16 flex items-center justify-center text-gray-500">?</div>}
+                <div className="absolute top-2 left-2 bg-red-500 text-white text-xs font-bold px-3 py-1 rounded-full z-10">
+                  Best Deal
+                </div>
               </div>
 
-              {/* Product Label/Badge - Static for now */}
-              <div className="absolute top-2 left-2 bg-red-500 text-white text-xs font-bold px-2 py-1 rounded-full z-10">
-                Best Deal
-              </div>
-
-              {/* Product Details Caption */}
-              <div className="p-4 flex flex-col justify-between h-full">
-                <div> {/* Group for Name and Rating */}
-                  <h3 className="text-lg font-semibold text-gray-800 mb-2 line-clamp-2 h-16">
+              <div className="p-4 flex flex-col flex-grow">
+                <div className="flex-grow">
+                  <h3 className="text-lg font-bold text-gray-900 mb-2 h-16 line-clamp-2">
                     {product.name}
                   </h3>
-                  <div className="flex items-center mb-2"> {/* Rating */}
+                  <div className="flex items-center mb-4">
                     {Array.from({ length: 5 }).map((_, i) => (
                       <FaStar
                         key={i}
@@ -77,26 +67,26 @@ const Popularproducts: React.FC = () => {
                   </div>
                 </div>
 
-                {/* Price Section - Moved here, right under reviews */}
-                <div className="flex items-baseline space-x-2 mb-3"> {/* mb-3 for spacing before button */}
-                  <span className="text-xl font-bold text-white bg-blue-600 px-2 py-1 rounded-md">{product.price}</span>
-                  {product.oldPrice && (
-                    <span className="text-sm text-gray-500 line-through">{product.oldPrice}</span>
-                  )}
-                </div>
+                <div className="mt-auto">
+                  <div className="flex items-baseline space-x-2 mb-4">
+                    <span className="text-2xl font-extrabold text-blue-600">{product.price}</span>
+                    {product.oldPrice && (
+                      <span className="text-base text-gray-500 line-through">{product.oldPrice}</span>
+                    )}
+                  </div>
 
-                {/* Add to Cart Button - Placed at the very bottom, pushed by justify-between */}
-                <button
-                  onClick={(e) => {
-                    e.preventDefault();
-                    e.stopPropagation();
-                    alert(`Added ${product.name} to cart!`);
-                  }}
-                  className="w-full border border-blue-300 text-blue-600 py-2 rounded-md flex items-center justify-center space-x-2 transition-colors duration-300 hover:bg-[#111827] hover:text-white"
-                >
-                  <FaShoppingCart />
-                  <span>Add to Cart</span>
-                </button>
+                  <button
+                    onClick={(e) => {
+                      e.preventDefault();
+                      e.stopPropagation();
+                      alert(`Added ${product.name} to cart!`);
+                    }}
+                    className="w-full bg-blue-600 text-white py-2 rounded-md flex items-center justify-center space-x-2 font-semibold transition-colors duration-300 hover:bg-[#111826]"
+                  >
+                    <FaShoppingCart />
+                    <span>Add to Cart</span>
+                  </button>
+                </div>
               </div>
             </Link>
           );

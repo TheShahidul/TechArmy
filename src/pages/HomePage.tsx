@@ -9,13 +9,13 @@ import Partners from '../components/Partners';
 
 const HomePage = () => {
   return (
-    <>
+        <>
       <Hero />
       <Productcategory />
       <Hotdeals />
       <Popularproducts />
       <Newarrivals />
-      <Productdesign />
+      
       <Upcoming />
       <Partners />
     </>

@@ -1,10 +1,11 @@
 import React from 'react';
 import { products } from '../data/products';
 import ProductCard from './ProductCard';
+import { FaYenSign } from 'react-icons/fa';
 
 const Newarrivals: React.FC = () => {
   const newArrivals = products.filter(product => product.status === 'New Arrival');
-
+FaYenSign
   return (
     <section className="py-8">
       <h2 className="text-3xl font-bold text-center mb-8 text-gray-900">New Arrivals</h2>
