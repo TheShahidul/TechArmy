@@ -58,7 +58,7 @@ const MenuItem: React.FC<MenuItemProps> = ({ item, level = 0 }) => {
     >
       <Link
         to={item.href}
-        className="block px-2 py-2 text-gray-700 hover:bg-blue-600 hover:text-white transition-colors duration-200 whitespace-nowrap"
+        className="block px-2 py-2 text-gray-700 hover:bg-[#111827] hover:text-white transition-colors duration-200 whitespace-nowrap"
       >
         {item.label}
       </Link>
