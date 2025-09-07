@@ -6,21 +6,21 @@ declare module '*.css' {
 }
 
 declare module 'swiper/css' {
-  const content: any;
+  const content: undefined;
   export default content;
 }
 
 declare module 'swiper/css/navigation' {
-  const content: any;
+  const content: undefined;
   export default content;
 }
 
 declare module 'swiper/css/pagination' {
-  const content: any;
+  const content: undefined;
   export default content;
 }
 
 declare module 'swiper/css/scrollbar' {
-  const content: any;
+  const content: undefined;
   export default content;
 }

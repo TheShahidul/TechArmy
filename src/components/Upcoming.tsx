@@ -12,7 +12,7 @@ import { Swiper, SwiperSlide } from 'swiper/react';
 import 'swiper/css';
 import 'swiper/css/navigation';
 import 'swiper/css/pagination';
-import { Navigation, Pagination } from 'swiper/modules';
+import { Navigation, Pagination, Autoplay } from 'swiper/modules';
 import SectionTitle from './SectionTitle';
 
 const Upcoming: React.FC = () => {
@@ -27,7 +27,11 @@ const Upcoming: React.FC = () => {
         spaceBetween={10}
         navigation={true}
         pagination={{ clickable: true }}
-        modules={[Navigation, Pagination]}
+        modules={[Navigation, Pagination, Autoplay]}
+        autoplay={{
+          delay: 3000,
+          disableOnInteraction: false,
+        }}
         breakpoints={{
           640: {
             slidesPerView: 2,
