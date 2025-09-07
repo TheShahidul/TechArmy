@@ -43,13 +43,13 @@ const Productcategory: React.FC = () => {
             <Link
               key={index}
               to={category.href}
-              className="relative flex flex-col items-center justify-center bg-white rounded-xl shadow-md hover:shadow-xl transform hover:scale-105 transition-all duration-300 border border-gray-200 hover:border-blue-500 aspect-square p-2" // Enhanced card styling and hover
+              className="relative flex flex-col items-center justify-center bg-white rounded-xl shadow-md hover:shadow-xl transform hover:scale-105 transition-all duration-300 border border-gray-200 hover:border-blue-500 aspect-square p-1" // Enhanced card styling and hover
             >
-              <div className="w-20 h-20 flex items-center justify-center bg-blue-100 rounded-full mb-4"> {/* Icon background circle */}
-                {IconComponent && <IconComponent size={40} className="text-blue-600" />} {/* Icon size adjusted */}
+              <div className="w-16 h-16 flex items-center justify-center bg-blue-100 rounded-full mb-4"> {/* Icon background circle */}
+                {IconComponent && <IconComponent size={32} className="text-blue-600" />} {/* Icon size adjusted */}
                 {!IconComponent && <div className="w-12 h-12 flex items-center justify-center text-gray-500">?</div>}
               </div>
-              <span className="text-base font-semibold text-gray-800 text-center mt-2">{category.title}</span> {/* Adjusted text styling */}
+              <span className="text-lg font-semibold text-gray-800 text-center mt-2">{category.title}</span> {/* Adjusted text styling */}
             </Link>
           );
         })}
