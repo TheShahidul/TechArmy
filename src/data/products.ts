@@ -61,4 +61,7 @@ export const products: Product[] = [
   { id: 23, name: 'Upcoming VR Headset', price: '799', image: 'https://via.placeholder.com/300', status: 'Upcoming', category: 'Gadgets', subcategory: 'VR' },
   { id: 24, name: 'Next-Gen Gaming Chair', price: '350', image: 'https://via.placeholder.com/300', status: 'Upcoming', category: 'Gaming', subcategory: 'Gaming Chair' },
   { id: 25, name: 'Foldable Smartphone', price: '1200', image: 'https://via.placeholder.com/300', status: 'Upcoming', category: 'Gadgets', subcategory: 'Smartphone' },
+  { id: 26, name: 'Smart Home Hub', price: '250', image: 'https://via.placeholder.com/300', status: 'Upcoming', category: 'Gadgets', subcategory: 'Smart Home' },
+  { id: 27, name: 'Portable Gaming Console', price: '400', image: 'https://via.placeholder.com/300', status: 'Upcoming', category: 'Gaming', subcategory: 'Console' },
+  { id: 28, name: 'AI-Powered Drone', price: '1500', image: 'https://via.placeholder.com/300', status: 'Upcoming', category: 'Gadgets', subcategory: 'Drones' },
 ];
