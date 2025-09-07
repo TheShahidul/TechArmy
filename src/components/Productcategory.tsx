@@ -21,7 +21,7 @@ const Productcategory: React.FC = () => {
       </div>
 
       {/* Categories Grid */}
-      <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-6 xl:grid-cols-7 gap-4 md:gap-6"> {/* Added xl:grid-cols-7, adjusted gap */}
+      <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-6 gap-4 md:gap-6"> {/* Added xl:grid-cols-7, adjusted gap */}
         {categoriesData.map((category, index) => {
           let IconComponent: React.ElementType | undefined;
 
@@ -43,7 +43,7 @@ const Productcategory: React.FC = () => {
             <Link
               key={index}
               to={category.href}
-              className="flex flex-col items-center p-4 md:p-6 bg-white rounded-xl shadow-lg hover:shadow-xl transform hover:scale-105 transition-all duration-300 border border-gray-200 hover:border-blue-500" // Enhanced card styling and hover
+              className="relative flex flex-col items-center justify-center bg-white rounded-xl shadow-md hover:shadow-xl transform hover:scale-105 transition-all duration-300 border border-gray-200 hover:border-blue-500 aspect-square p-2" // Enhanced card styling and hover
             >
               <div className="w-20 h-20 flex items-center justify-center bg-blue-100 rounded-full mb-4"> {/* Icon background circle */}
                 {IconComponent && <IconComponent size={40} className="text-blue-600" />} {/* Icon size adjusted */}
