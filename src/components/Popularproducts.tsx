@@ -12,7 +12,7 @@ import * as LuIcons from 'react-icons/lu';
 const Popularproducts: React.FC = () => {
   return (
     <div className="container mx-auto my-12 px-4">
-      <div className="text-center mb-12">
+      <div className="text-center mb-12 group bg-gradient-to-r from-blue-200 to-blue-300 shadow-lg rounded-lg py-4 px-4">
         <h2 className="text-4xl md:text-5xl font-extrabold text-gray-800 mb-4">
           Popular Products
           

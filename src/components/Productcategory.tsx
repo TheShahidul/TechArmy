@@ -12,8 +12,8 @@ const Productcategory: React.FC = () => {
   return (
     <div className="container mx-auto my-8 px-4">
       {/* Title Section */}
-      <div className="text-center mb-12"> {/* Increased bottom margin */}
-        <h2 className="text-4xl md:text-5xl font-extrabold text-gray-800 mb-4 relative inline-block"> {/* Larger, bolder, relative for pseudo-element */}
+      <div className="text-center mb-12 group bg-gradient-to-r from-blue-200 to-blue-300 shadow-lg rounded-lg py-4 px-4"> {/* Increased bottom margin */}
+        <h2 className="text-4xl md:text-5xl font-extrabold text-gray-800 mb-4 relative"> {/* Larger, bolder, relative for pseudo-element */}
           Tech That Powers You
           <span className="absolute bottom-0 left-1/2 transform -translate-x-1/2 w-24 h-1 bg-blue-600 rounded-full"></span> {/* Blue underline */}
         </h2>
