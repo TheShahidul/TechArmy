@@ -107,17 +107,7 @@ const Navbar: React.FC = () => {
             <MenuItem key={index} item={item} level={0} />
           ))}
         </ul>
-        <div className="flex items-center space-x-4">
-          {auth.isAuthenticated && (
-            <>
-              <span className="text-sm">Hello, {auth.user?.username}</span>
-              <button
-                onClick={() => dispatch(logout())}
-                className="bg-red-500 hover:bg-red-600 text-white px-3 py-1 rounded text-sm font-semibold"
-              >Logout</button>
-            </>
-          )}
-        </div>
+  {/* ...existing code... */}
       </div>
     </nav>
   );
