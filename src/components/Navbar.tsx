@@ -41,11 +41,13 @@ const MenuItem: React.FC<MenuItemProps> = ({ item, level = 0 }) => {
   // Determine dropdown positioning classes
   const dropdownPositionClasses = level === 0
     ? 'top-full left-0' // Top-level dropdowns open directly below the parent item
-    : (openLeft ? 'right-full top-0' : 'left-full top-0'); // Nested dropdowns open to the side, flipping if needed
+    : 'top-0'; // Nested dropdowns align with the top of their parent item
+
+  const sidePositionClass = openLeft ? 'right-full' : 'left-full'; // Side positioning for nested menus
 
   const dropdownClasses = `absolute w-48 bg-white shadow-lg rounded-md py-1 z-10 ${
     isOpen ? 'block' : 'hidden'
-  } group-hover:block ${dropdownPositionClasses}`;
+  } ${level > 0 ? sidePositionClass : ''} ${dropdownPositionClasses}`;
 
   return (
     <li
@@ -59,9 +61,8 @@ const MenuItem: React.FC<MenuItemProps> = ({ item, level = 0 }) => {
         className="block px-4 py-2 text-gray-700 hover:bg-gray-100 hover:text-blue-600 transition-colors duration-200"
       >
         {item.label}
-        {/* Removed the SVG arrow icon */}
       </Link>
-      {hasChildren && (
+      {hasChildren && level < 2 && (
         <ul className={dropdownClasses}>
           {item.children?.map((child, index) => (
             <MenuItem key={index} item={child} level={level + 1} />
