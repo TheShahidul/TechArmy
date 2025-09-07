@@ -7,18 +7,13 @@ import * as Io5Icons from 'react-icons/io5';
 import * as BsIcons from 'react-icons/bs';
 import * as FiIcons from 'react-icons/fi';
 import * as LuIcons from 'react-icons/lu';
+import SectionTitle from './SectionTitle';
 
 const Productcategory: React.FC = () => {
   return (
     <div className="container mx-auto my-8 px-4">
       {/* Title Section */}
-      <div className="text-center mb-12 group bg-gradient-to-r from-blue-200 to-blue-300 shadow-lg rounded-lg py-4 px-4"> {/* Increased bottom margin */}
-        <h2 className="text-4xl md:text-5xl font-extrabold text-gray-800 mb-4 relative"> {/* Larger, bolder, relative for pseudo-element */}
-          Tech That Powers You
-          <span className="absolute bottom-0 left-1/2 transform -translate-x-1/2 w-24 h-1 bg-blue-600 rounded-full"></span> {/* Blue underline */}
-        </h2>
-        <p className="text-lg md:text-xl text-gray-600 mt-4">Explore our wide range of IT products</p>
-      </div>
+      <SectionTitle title="Tech That Powers You" description="Explore our wide range of IT products" />
 
       {/* Categories Grid */}
       <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-6 gap-x-4 md:gap-x-6 gap-y-2 md:gap-y-4"> {/* Added xl:grid-cols-7, adjusted gap */}

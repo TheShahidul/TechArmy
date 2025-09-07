@@ -8,18 +8,14 @@ import * as Io5Icons from 'react-icons/io5';
 import * as BsIcons from 'react-icons/bs';
 import * as FiIcons from 'react-icons/fi';
 import * as LuIcons from 'react-icons/lu';
+import SectionTitle from './SectionTitle';
 
 const Newarrivals: React.FC = () => {
   const newArrivals = popularProductsData;
 
   return (
     <div className="container mx-auto my-12 px-4">
-      <div className="text-center mb-12 group bg-gradient-to-r from-blue-200 to-blue-300 shadow-lg rounded-lg py-4 px-4">
-        <h2 className="text-4xl md:text-5xl font-extrabold text-gray-800 mb-4">
-          New Arrivals
-        </h2>
-        <p className="text-lg md:text-xl text-gray-600">Discover our latest items</p>
-      </div>
+      <SectionTitle title="New Arrivals" description="Discover our latest items" />
 
       <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5 gap-8">
         {newArrivals.map((product) => {

@@ -74,8 +74,27 @@ const MenuItem: React.FC<MenuItemProps> = ({ item, level = 0 }) => {
 };
 
 const Navbar: React.FC = () => {
+  const [scrolled, setScrolled] = useState(false);
+
+  useEffect(() => {
+    const handleScroll = () => {
+      const isScrolled = window.scrollY > 0;
+      if (isScrolled !== scrolled) {
+        setScrolled(isScrolled);
+      }
+    };
+
+    window.addEventListener('scroll', handleScroll);
+
+    return () => {
+      window.removeEventListener('scroll', handleScroll);
+    };
+  }, [scrolled]);
+
   return (
-    <nav className="bg-gray-200 shadow-md sticky top-0 z-50">
+    <nav className={`shadow-md sticky top-0 z-50 transition-all duration-300 ${
+      scrolled ? 'bg-white bg-opacity-80 backdrop-blur-md' : 'bg-gray-200'
+    }`}>
       <div className="container mx-auto px-4 py-3 flex justify-center items-center">
         <ul className="flex space-x-2">
           {menuData.map((item, index) => (

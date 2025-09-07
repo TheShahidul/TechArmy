@@ -13,18 +13,14 @@ import 'swiper/css';
 import 'swiper/css/navigation';
 import 'swiper/css/pagination';
 import { Navigation, Pagination } from 'swiper/modules';
+import SectionTitle from './SectionTitle';
 
 const Upcoming: React.FC = () => {
   const upcomingProducts = products.filter(product => product.status === 'Upcoming');
 
   return (
     <div className="container mx-auto my-12 px-4">
-      <div className="text-center mb-12 group bg-gradient-to-r from-blue-200 to-blue-300 shadow-lg rounded-lg py-4 px-4">
-        <h2 className="text-4xl md:text-5xl font-extrabold text-gray-800 mb-4">
-          Upcoming Products
-        </h2>
-        <p className="text-lg md:text-xl text-gray-600">Discover our soon-to-be-released items</p>
-      </div>
+      <SectionTitle title="Upcoming Products" description="Discover our soon-to-be-released items" />
 
       <Swiper
         slidesPerView={1}
