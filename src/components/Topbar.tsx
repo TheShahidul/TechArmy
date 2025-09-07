@@ -40,11 +40,13 @@ const Topbar: React.FC<TopbarProps> = ({ toggleCart }) => { // Destructure toggl
       <div className="container mx-auto flex items-center justify-between px-6 pb-3">
         {/* Left Section: Logo, Shop Text, Slogan */}
         <div className="flex items-center space-x-3">
-          <img src={logo} alt="Tech Army Logo" className="h-28 w-auto rounded-full" />
-          <div className="flex flex-col">
-            <span className="text-3xl font-bold">TechArmyBD Ltd.</span>
-            <span className="text-sm text-gray-400">Your Trusted IT Product Companion</span>
-          </div>
+          <Link to="/" className="flex items-center space-x-3">
+            <img src={logo} alt="Tech Army Logo" className="h-28 w-auto rounded-full" />
+            <div className="flex flex-col">
+              <span className="text-3xl font-bold">TechArmyBD Ltd.</span>
+              <span className="text-sm text-gray-400">Your Trusted IT Product Companion</span>
+            </div>
+          </Link>
         </div>
 
         {/* Middle Section: Search Bar */}

@@ -101,7 +101,7 @@ const Navbar: React.FC = () => {
     <nav className={`shadow-md sticky top-0 z-50 transition-all duration-300 ${
       scrolled ? 'bg-white bg-opacity-80 backdrop-blur-md' : 'bg-gray-200'
     }`}>
-      <div className="container mx-auto px-4 py-3 flex justify-between items-center">
+      <div className="container mx-auto px-4 py-3 flex justify-center items-center">
         <ul className="flex space-x-2">
           {menuData.map((item, index) => (
             <MenuItem key={index} item={item} level={0} />
